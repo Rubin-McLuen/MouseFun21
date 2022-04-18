@@ -10,6 +10,7 @@ public class myPanel extends JPanel {
     private Dot d;
     private ArrayList<Dot> dots = new ArrayList<Dot>();
     private Point location;
+    private boolean holdingDot = false;
 
     public myPanel() {
         setPreferredSize(new Dimension(500,500));
@@ -59,10 +60,12 @@ public class myPanel extends JPanel {
            for (Dot d : dots){
                if (d.isInside(location)){
                    removeD = d;
+                   if (removeD != null){
+                       dots.remove(removeD);
+                   holdingDot = true;
+                   d.setColor(Color.red);
                }
            }
-           if (removeD != null){
-               dots.remove(removeD);
            }
        }
 
@@ -70,6 +73,7 @@ public class myPanel extends JPanel {
        public void mouseReleased(MouseEvent e) {
            d.setColor(Color.BLUE);
            dots.add(d);
+           holdingDot = false;
            repaint();
        }
 
@@ -85,8 +89,10 @@ public class myPanel extends JPanel {
 
        @Override
        public void mouseDragged(MouseEvent e) {
-          d.setCenter(e.getPoint());
-          repaint();
+           if(holdingDot == true){
+              d.setCenter(e.getPoint());
+              repaint();
+           }
        }
 
        @Override
