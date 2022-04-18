@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class myPanel extends JPanel {
     private Dot d;
     private ArrayList<Dot> dots = new ArrayList<Dot>();
+    private Point location;
 
     public myPanel() {
         setPreferredSize(new Dimension(500,500));
@@ -52,9 +53,17 @@ public class myPanel extends JPanel {
 
        @Override
        public void mousePressed(MouseEvent e) {
-           d = new Dot(e.getPoint());
-           d.setColor(Color.RED);
-           repaint();
+           Dot removeD = null;
+           System.out.println("MousePressed");
+           location = e.getPoint();
+           for (Dot d : dots){
+               if (d.isInside(location)){
+                   removeD = d;
+               }
+           }
+           if (removeD != null){
+               dots.remove(removeD);
+           }
        }
 
        @Override

@@ -13,6 +13,10 @@ public class Dot {
         color = Color.BLUE;
     }
 
+    public boolean isInside(Point p){
+        return p.distance(center) < radius;
+    }
+
     public int getRadius() {
         return radius;
     }
